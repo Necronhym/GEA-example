@@ -4,7 +4,7 @@
 #include <time.h>
 #include <algorithm>
 
-std::string S= "thequickbrownfoxjumpedoverthelazydog";
+std::string S= "";
 
 
 
@@ -14,7 +14,10 @@ class Agent
 		int Fitness;
 		char getRandGene(void)
 			{
-				return 'a' + rand() % 26;
+				char a = rand() % 27;
+				if( a == 26 ) a = ' ';
+				else a = 'a' + a;
+				return a;
 			}
 		public:
 		Agent(std::string S)
@@ -115,16 +118,23 @@ std::vector<Agent> reproduce(Agent A, Agent B)
 
 std::vector<Agent> Pop;
 
-int main()
+int main(int argc, char* argv[])
 	{
+		for(int i=1; i<argc; i++)
+			{
+				S.append(argv[i]);
+				S.append(" ");
+			}
 		srand(time(NULL));
 		//Create Population of 50:
 		for(int i=0; i<100; i++)
 			{
 				Pop.push_back(Agent(S));
 			}
-		for(int i=0; i < 250; i ++)
+		int i=0;
+		while(true)
 			{
+				i++;
 				//Do Check:
 				for(auto &A: Pop)
 					{
